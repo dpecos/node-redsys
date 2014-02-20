@@ -1,6 +1,6 @@
 {
   "name": "node-sermepa",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Node implementation of Sermepa payment gateway API",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,7 @@
   ],
   "author": "Daniel Pecos Martinez",
   "license": "Apache",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.2",
     "sinon-chai": "^2.5.0",
