@@ -14,5 +14,16 @@
     "sermepa"
   ],
   "author": "Daniel Pecos Martinez",
-  "license": "Apache"
+  "license": "Apache",
+  "dependencies": {
+    "lodash": "^2.4.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.2",
+    "sinon-chai": "^2.5.0",
+    "sinon": "^1.8.2",
+    "chai": "^1.9.0",
+    "grunt-contrib-watch": "^0.5.3",
+    "grunt-simple-mocha": "^0.4.0"
+  }
 }
