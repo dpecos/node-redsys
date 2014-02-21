@@ -4,11 +4,19 @@ Utils = require './utils'
 
 currency_mapping =
   'EUR': 978
+  'USD': 840
+
+language_mapping =
+  'auto': 0
+  'es': 1
+  'en': 2
 
 class Sermepa
   constructor: (@config = {}) ->
     @form_url = "https://sis.redsys.es/sis/realizarPago"
     @form_url = "https://sis-t.redsys.es:25443/sis/realizarPago" if @config.test
+
+    @config.language = @convert_language(@config.language)
 
   build_payload: (data) ->
     str = "" +
@@ -18,7 +26,7 @@ class Sermepa
       data.currency
 
     str += data.transaction_type if data.transaction_type and data.transaction_type isnt 0
-    str += @config.urls.online if @config.urls.online
+    str += data.redirect_urls?.callback if data.redirect_urls?.callback
 
     str += @config.merchant.secret
 
@@ -30,7 +38,13 @@ class Sermepa
     shasum.digest 'hex'
 
   convert_currency: (currency) ->
-    currency_mapping[currency]
+    currency_mapping[currency] || "Unknown!"
+
+  convert_language: (language) ->
+    if typeof language_mapping[language] is 'undefined'
+      "Unknown!"
+    else
+      language_mapping[language]
 
   normalize: (data) ->
     if Math.floor(data.total) isnt data.total
@@ -45,9 +59,9 @@ class Sermepa
       description: Utils.format data.description, 125
       titular: Utils.format @config.merchant.titular, 60
       merchant_code: Utils.formatNumber @config.merchant.code, 9
-      merchant_url: Utils.format @config.urls.online, 250
-      merchant_url_ok: Utils.format @config.urls.ok, 250
-      merchant_url_ko: Utils.format @config.urls.ko, 250
+      merchant_url: Utils.format data.redirect_urls?.callback, 250
+      merchant_url_ok: Utils.format data.redirect_urls?.return_url, 250
+      merchant_url_ko: Utils.format data.redirect_urls?.cancel_url, 250
       merchant_name: Utils.format @config.merchant.name, 25
       language: Utils.formatNumber @config.language, 3
       signature: Utils.format @sign(data), 40
