@@ -1,6 +1,6 @@
 {
   "name": "node-sermepa",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Node implementation of Sermepa payment gateway API",
   "main": "index.js",
   "scripts": {
