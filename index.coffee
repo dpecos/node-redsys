@@ -1,3 +1,3 @@
-Sermepa = require("./src/sermepa").Sermepa
+Redsys = require("./src/redsys").Redsys
 
-module.exports = Sermepa
+module.exports = Redsys

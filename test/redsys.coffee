@@ -6,12 +6,12 @@ chai.use sinon_chai
 
 should = chai.should()
 
-Sermepa = require('../src/sermepa').Sermepa
+Redsys = require('../src/redsys').Redsys
 
-describe "Sermepa API", ->
+describe "Redsys API", ->
 
   before ->
-    @sermepa = new Sermepa
+    @redsys = new Redsys
       test: true
       merchant:
         code: '201920191'
@@ -21,23 +21,23 @@ describe "Sermepa API", ->
   describe "Setup", ->
 
     it "should point to test environment when test mode enabled", ->
-      @sermepa.form_url.should.equal "https://sis-t.redsys.es:25443/sis/realizarPago"
+      @redsys.form_url.should.equal "https://sis-t.redsys.es:25443/sis/realizarPago"
 
     it "should point to real environment when test mode disabled", ->
-      sermepa = new Sermepa
-      sermepa.form_url.should.equal "https://sis.redsys.es/sis/realizarPago"
+      redsys = new Redsys
+      redsys.form_url.should.equal "https://sis.redsys.es/sis/realizarPago"
 
   describe "Sign", ->
     
     it "build payload correctly", ->
-      @sermepa.build_payload
+      @redsys.build_payload
         total: 1235
         order: '29292929'
         currency: 978
       .should.equal '123529292929201920191978h2u282kMks01923kmqpo'
 
     it "should sign correctly", ->
-      @sermepa.sign
+      @redsys.sign
         total: 1235
         order: '29292929'
         currency: 978
@@ -45,7 +45,7 @@ describe "Sermepa API", ->
 
 
     it "should sign an order correctly", ->
-      form = @sermepa.create_payment
+      form = @redsys.create_payment
         total: 12.35
         order: '29292929'
         currency: 'EUR'

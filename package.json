@@ -1,17 +1,17 @@
 {
-  "name": "node-sermepa",
+  "name": "redsys",
   "version": "0.0.2",
-  "description": "Node implementation of Sermepa payment gateway API",
+  "description": "Node implementation of Redsys (Sermepa) payment gateway API",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.org:dpecos/node-sermepa.git"
+    "url": "git@github.org:dpecos/node-redsys.git"
   },
   "keywords": [
-    "sermepa"
+    "redsys"
   ],
   "author": "Daniel Pecos Martinez",
   "license": "Apache",

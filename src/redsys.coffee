@@ -11,7 +11,7 @@ language_mapping =
   'es': 1
   'en': 2
 
-class Sermepa
+class Redsys
   constructor: (@config = {}) ->
     @form_url = "https://sis.redsys.es/sis/realizarPago"
     @form_url = "https://sis-t.redsys.es:25443/sis/realizarPago" if @config.test
@@ -74,30 +74,30 @@ class Sermepa
 
 
   create_payment: (order_data) =>
-    sermepa_data = @normalize(order_data)
+    tpv_data = @normalize(order_data)
 
     form_data =
       URL: @form_url
-      Ds_Merchant_Amount: sermepa_data.total
-      Ds_Merchant_Currency: sermepa_data.currency
-      Ds_Merchant_Order: sermepa_data.order
-      Ds_Merchant_ProductDescription: sermepa_data.description
-      Ds_Merchant_Titular: sermepa_data.titular
-      Ds_Merchant_MerchantCode: sermepa_data.merchant_code
-      Ds_Merchant_MerchantURL: sermepa_data.merchant_url
-      Ds_Merchant_UrlOK: sermepa_data.merchant_url_ok
-      Ds_Merchant_UrlKO: sermepa_data.merchant_url_ko
-      Ds_Merchant_MerchantName: sermepa_data.merchant_name
-      Ds_Merchant_ConsumerLanguage: sermepa_data.language
-      Ds_Merchant_MerchantSignature: sermepa_data.signature
-      Ds_Merchant_Terminal: sermepa_data.terminal
-      Ds_Merchant_TransactionType: sermepa_data.transaction_type
+      Ds_Merchant_Amount: tpv_data.total
+      Ds_Merchant_Currency: tpv_data.currency
+      Ds_Merchant_Order: tpv_data.order
+      Ds_Merchant_ProductDescription: tpv_data.description
+      Ds_Merchant_Titular: tpv_data.titular
+      Ds_Merchant_MerchantCode: tpv_data.merchant_code
+      Ds_Merchant_MerchantURL: tpv_data.merchant_url
+      Ds_Merchant_UrlOK: tpv_data.merchant_url_ok
+      Ds_Merchant_UrlKO: tpv_data.merchant_url_ko
+      Ds_Merchant_MerchantName: tpv_data.merchant_name
+      Ds_Merchant_ConsumerLanguage: tpv_data.language
+      Ds_Merchant_MerchantSignature: tpv_data.signature
+      Ds_Merchant_Terminal: tpv_data.terminal
+      Ds_Merchant_TransactionType: tpv_data.transaction_type
 
-    form_data.Ds_Merchant_AuthorisationCode = sermepa_data.authorization_code if sermepa_data.authorization_code
-    form_data.Ds_Merchant_MerchantData = sermepa_data.data if sermepa_data.data
+    form_data.Ds_Merchant_AuthorisationCode = tpv_data.authorization_code if tpv_data.authorization_code
+    form_data.Ds_Merchant_MerchantData = tpv_data.data if tpv_data.data
 
     form_data
     
 
 module.exports =
-  Sermepa: Sermepa
+  Redsys: Redsys
