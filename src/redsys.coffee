@@ -32,9 +32,20 @@ class Redsys
 
     str
 
+  build_response_payload: (data) ->
+    str = "" +
+      data.Ds_Amount +
+      data.Ds_Order +
+      data.Ds_MerchantCode +
+      data.Ds_Currency +
+      data.Ds_Response +
+      @config.merchant.secret
+
+    str
+
   sign: (data) =>
     shasum = crypto.createHash 'sha1'
-    shasum.update @build_payload data
+    shasum.update data
     shasum.digest 'hex'
 
   convert_currency: (currency) ->
@@ -64,7 +75,7 @@ class Redsys
       merchant_url_ko: Utils.format data.redirect_urls?.cancel_url, 250
       merchant_name: Utils.format @config.merchant.name, 25
       language: Utils.formatNumber @config.language, 3
-      signature: Utils.format @sign(data), 40
+      signature: Utils.format @sign(@build_payload data), 40
       terminal: Utils.formatNumber @config.merchant.terminal, 3
       transaction_type: data.transaction_type
     normalize_data.authorization_code = Utils.formatNumber data.authorization_code, 6 if data.authorization_code
@@ -98,6 +109,9 @@ class Redsys
 
     form_data
     
+  validate_response: (response) =>
+    signature = @sign(@build_response_payload response)
+    response.Ds_Signature.toLowerCase() is signature
 
 module.exports =
   Redsys: Redsys
