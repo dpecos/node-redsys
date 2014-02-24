@@ -25,7 +25,7 @@ class Sermepa
       @config.merchant.code +
       data.currency
 
-    str += data.transaction_type if data.transaction_type and data.transaction_type isnt 0
+    str += data.transaction_type if typeof(data.transaction_type) != 'undefined'
     str += data.redirect_urls?.callback if data.redirect_urls?.callback
 
     str += @config.merchant.secret
@@ -52,9 +52,9 @@ class Sermepa
 
     data.currency = @convert_currency(data.currency)
 
-    return {
-      total: Utils.formatNumber data.total, 12
-      currency: Utils.formatNumber data.currency, 4
+    normalize_data =
+      total: data.total
+      currency: data.currency
       order: Utils.format data.order, 4, 12
       description: Utils.format data.description, 125
       titular: Utils.format @config.merchant.titular, 60
@@ -65,17 +65,18 @@ class Sermepa
       merchant_name: Utils.format @config.merchant.name, 25
       language: Utils.formatNumber @config.language, 3
       signature: Utils.format @sign(data), 40
-      terminal: Utils.formatNumber 1, 3
-      data: Utils.format data.data, 1024
-      transaction_type: 0
-      authorization_code: Utils.formatNumber data.authorization_code, 6
-    }
+      terminal: Utils.formatNumber @config.merchant.terminal, 3
+      transaction_type: data.transaction_type
+    normalize_data.authorization_code = Utils.formatNumber data.authorization_code, 6 if data.authorization_code
+    normalize_data.data = Utils.format data.data, 1024 if data.data
+
+    normalize_data
 
 
   create_payment: (order_data) =>
     sermepa_data = @normalize(order_data)
 
-    return {
+    form_data =
       URL: @form_url
       Ds_Merchant_Amount: sermepa_data.total
       Ds_Merchant_Currency: sermepa_data.currency
@@ -90,10 +91,13 @@ class Sermepa
       Ds_Merchant_ConsumerLanguage: sermepa_data.language
       Ds_Merchant_MerchantSignature: sermepa_data.signature
       Ds_Merchant_Terminal: sermepa_data.terminal
-      Ds_Merchant_MerchantData: sermepa_data.data
       Ds_Merchant_TransactionType: sermepa_data.transaction_type
-      Ds_Merchant_AuthorisationCode: sermepa_data.authorization_code
-    }
+
+    form_data.Ds_Merchant_AuthorisationCode = sermepa_data.authorization_code if sermepa_data.authorization_code
+    form_data.Ds_Merchant_MerchantData = sermepa_data.data if sermepa_data.data
+
+    form_data
+    
 
 module.exports =
   Sermepa: Sermepa
