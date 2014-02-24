@@ -11,7 +11,11 @@
     "url": "git@github.org:dpecos/node-redsys.git"
   },
   "keywords": [
-    "redsys"
+    "redsys",
+    "sermepa",
+    "servired",
+    "4b",
+    "credit card"
   ],
   "author": "Daniel Pecos Martinez",
   "license": "Apache",
