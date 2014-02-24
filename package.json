@@ -1,6 +1,6 @@
 {
   "name": "redsys",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Node implementation of Redsys (Sermepa) payment gateway API",
   "main": "index.js",
   "scripts": {
