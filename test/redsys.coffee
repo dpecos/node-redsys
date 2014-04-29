@@ -80,7 +80,7 @@ describe "Redsys API", ->
       it "should sign an order correctly", ->
         form = @redsys.create_payment
           total: 100
-          order: '1404291227'
+          order: '1404291227XX'
           currency: 'EUR'
           transaction_type: Redsys.TransactionTypes.CARD_IN_ARCHIVE_INITIAL
           redirect_urls:

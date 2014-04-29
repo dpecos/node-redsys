@@ -81,17 +81,20 @@ class Redsys
       merchant_url_ko: Utils.format data.redirect_urls?.cancel_url, 250
       merchant_name: Utils.format @config.merchant.name, 25
       language: Utils.formatNumber @config.language, 3
-      signature: Utils.format @sign(@build_payload data), 40
       terminal: Utils.formatNumber @config.merchant.terminal, 3
       transaction_type: data.transaction_type
 
     if data.transaction_type is "L"
-      normalize_data.order = Utils.format data.order, 4, 10
+      data.order = Utils.format data.order, 4, 10
+      normalize_data.order = data.order
     else
-      normalize_data.order = Utils.format data.order, 4, 12
+      data.order = Utils.format data.order, 4, 12
+      normalize_data.order = data.order
 
     normalize_data.authorization_code = Utils.formatNumber data.authorization_code, 6 if data.authorization_code
     normalize_data.data = Utils.format data.data, 1024 if data.data
+
+    normalize_data.signature = Utils.format @sign(@build_payload data), 40
 
     normalize_data
 
