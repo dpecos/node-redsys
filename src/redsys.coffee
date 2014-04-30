@@ -31,8 +31,8 @@ class Redsys
       @config.merchant.code +
       data.currency
 
-    if data.transaction_type != Redsys.TransactionTypes.STANDAR_PAYMENT
-      str += data.transaction_type if typeof(data.transaction_type) != 'undefined'
+    if typeof(data.transaction_type) isnt 'undefined' and data.transaction_type != Redsys.TransactionTypes.STANDAR_PAYMENT
+      str += data.transaction_type
 
     str += data.redirect_urls?.callback if data.redirect_urls?.callback
     str += @config.merchant.secret
@@ -112,12 +112,12 @@ class Redsys
       Ds_Merchant_MerchantSignature: tpv_data.signature
       Ds_Merchant_Terminal: tpv_data.terminal
       Ds_Merchant_TransactionType: tpv_data.transaction_type
+      Ds_Merchant_MerchantURL: tpv_data.merchant_url
 
     if tpv_data.transaction_type isnt "L"
       _.extend form_data,
         Ds_Merchant_Titular: tpv_data.titular
         Ds_Merchant_ProductDescription: tpv_data.description
-        Ds_Merchant_MerchantURL: tpv_data.merchant_url
         Ds_Merchant_UrlOK: tpv_data.merchant_url_ok
         Ds_Merchant_UrlKO: tpv_data.merchant_url_ko
         Ds_Merchant_MerchantName: tpv_data.merchant_name

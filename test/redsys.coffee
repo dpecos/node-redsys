@@ -60,7 +60,6 @@ describe "Redsys API", ->
           merchant:
             code: '123456789'
             secret: 'qwertyasdf0123456789'
-          language: 'es'
 
       after ->
         @redsys = redsys
