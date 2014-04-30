@@ -31,10 +31,9 @@ class Redsys
       @config.merchant.code +
       data.currency
 
-    if typeof(data.transaction_type) isnt 'undefined' and data.transaction_type != Redsys.TransactionTypes.STANDAR_PAYMENT
-      str += data.transaction_type
-
+    str += data.transaction_type if typeof(data.transaction_type) != 'undefined'
     str += data.redirect_urls?.callback if data.redirect_urls?.callback
+
     str += @config.merchant.secret
 
     str
