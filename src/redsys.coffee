@@ -112,13 +112,13 @@ class Redsys
       Ds_Merchant_Terminal: tpv_data.terminal
       Ds_Merchant_TransactionType: tpv_data.transaction_type
       Ds_Merchant_MerchantURL: tpv_data.merchant_url
+      Ds_Merchant_UrlOK: tpv_data.merchant_url_ok
+      Ds_Merchant_UrlKO: tpv_data.merchant_url_ko
 
     if tpv_data.transaction_type isnt "L"
       _.extend form_data,
         Ds_Merchant_Titular: tpv_data.titular
         Ds_Merchant_ProductDescription: tpv_data.description
-        Ds_Merchant_UrlOK: tpv_data.merchant_url_ok
-        Ds_Merchant_UrlKO: tpv_data.merchant_url_ko
         Ds_Merchant_MerchantName: tpv_data.merchant_name
 
       form_data.Ds_Merchant_AuthorisationCode = tpv_data.authorization_code if tpv_data.authorization_code
